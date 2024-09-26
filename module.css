@@ -1,0 +1,48 @@
+
+.modal {
+    text-align: center;
+    padding: 0 !important; 
+}
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;  
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.modal.center-opening {
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transform: scale(0.5);
+    opacity: 0;
+}
+
+.modal.center-opening.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-lg-custom {
+    width: 70%;
+}
+
+.modal-dialog-custom {
+    height: 70%;
+}
+
+.modal-content-custom {
+    height: 100%;
+    border-radius: 0;
+}
+.tabla-contenedor {
+    overflow-y: auto;
+/*    border: 3px solid red;*/
+/*    max-height: 350px;*/
+}

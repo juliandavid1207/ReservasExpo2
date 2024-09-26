@@ -1,0 +1,821 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7D61A32C-0F21-453F-A981-BD8E5A3A5304}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AllNet.Modules.ReservasExportaciones</RootNamespace>
+    <AssemblyName>ReservasExportaciones</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DataTables-Editor-Server, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\DataTables-Editor-Server.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke, Version=9.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\DotNetNuke.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.Instrumentation, Version=8.0.4.226, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\DotNetNuke.Instrumentation.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.Web, Version=8.0.4.226, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\DotNetNuke.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\Controllers\BookingsController.cs" />
+    <Compile Include="Components\Controllers\CntrController.cs" />
+    <Compile Include="Components\Controllers\CommentsController.cs" />
+    <Compile Include="Components\Controllers\FilesExpoController.cs" />
+    <Compile Include="Components\Controllers\MasterController.cs" />
+    <Compile Include="Components\FeatureController.cs" />
+    <Compile Include="Components\Models\BookingsModel.cs" />
+    <Compile Include="Components\Models\CommentsModel.cs" />
+    <Compile Include="Components\Models\DataClient.cs" />
+    <Compile Include="Components\Models\DetCargaBModel.cs" />
+    <Compile Include="Components\Models\FilesExpoModel.cs" />
+    <Compile Include="Components\RC4.cs" />
+    <Compile Include="Components\ReservasExportacionesRouteMapper.cs" />
+    <Compile Include="Data\DataProvider.cs" />
+    <Compile Include="ReservasExportacionesModuleBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReservasExportacionesModuleSettingsBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Edit.ascx.cs">
+      <DependentUpon>Edit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Edit.ascx.designer.cs">
+      <DependentUpon>Edit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\DataProviders\SqlDataProvider\SqlDataProvider.cs" />
+    <Compile Include="Settings.ascx.cs">
+      <DependentUpon>Settings.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Settings.ascx.designer.cs">
+      <DependentUpon>Settings.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="View.ascx.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View.ascx.designer.cs">
+      <DependentUpon>View.ascx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Edit.ascx" />
+    <Content Include="License.txt" />
+    <Content Include="module.css" />
+    <Content Include="ReleaseNotes.txt" />
+    <Content Include="Settings.ascx" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.bootstrap.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.bootstrap4.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.bootstrap5.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.bulma.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.bulma.min.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.dataTables.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.dataTables.min.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.foundation.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.foundation.min.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.jqueryui.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.semanticui.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\css\autoFill.semanticui.min.css" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.bootstrap.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.bootstrap4.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.bootstrap5.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.bulma.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.bulma.min.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.dataTables.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.dataTables.min.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.foundation.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.foundation.min.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.jqueryui.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.semanticui.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\autoFill.semanticui.min.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\dataTables.autoFill.js" />
+    <Content Include="vendor\DataTables\AutoFill-2.5.2\js\dataTables.autoFill.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.bootstrap.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.bootstrap4.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.bootstrap5.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.bulma.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.bulma.min.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.dataTables.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.dataTables.min.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.foundation.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.foundation.min.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.jqueryui.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.semanticui.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\buttons.semanticui.min.css" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.bootstrap.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.bootstrap4.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.bootstrap5.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.bulma.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.bulma.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.colVis.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.colVis.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.dataTables.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.dataTables.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.foundation.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.foundation.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.html5.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.html5.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.jqueryui.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.print.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.print.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.semanticui.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\buttons.semanticui.min.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\dataTables.buttons.js" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\js\dataTables.buttons.min.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.bootstrap.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.bootstrap4.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.bootstrap5.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.bulma.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.bulma.min.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.dataTables.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.dataTables.min.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.foundation.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.foundation.min.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.jqueryui.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.semanticui.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\css\colReorder.semanticui.min.css" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.bootstrap.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.bootstrap4.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.bootstrap5.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.bulma.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.bulma.min.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.dataTables.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.dataTables.min.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.foundation.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.foundation.min.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.jqueryui.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.semanticui.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\colReorder.semanticui.min.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\dataTables.colReorder.js" />
+    <Content Include="vendor\DataTables\ColReorder-1.6.1\js\dataTables.colReorder.min.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.bootstrap.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.bootstrap4.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.bootstrap5.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.bulma.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.bulma.min.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.dataTables.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.dataTables.min.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.foundation.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.foundation.min.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.jqueryui.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.semanticui.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\dataTables.semanticui.min.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\jquery.dataTables.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\css\jquery.dataTables.min.css" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\images\sort_asc.png" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\images\sort_asc_disabled.png" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\images\sort_both.png" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\images\sort_desc.png" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\images\sort_desc_disabled.png" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.bootstrap.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.bootstrap4.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.bootstrap5.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.bulma.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.bulma.min.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.dataTables.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.dataTables.min.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.foundation.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.foundation.min.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.jqueryui.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.semanticui.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\dataTables.semanticui.min.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\jquery.dataTables.js" />
+    <Content Include="vendor\DataTables\DataTables-1.13.2\js\jquery.dataTables.min.js" />
+    <Content Include="vendor\DataTables\datatables.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\DataTables\datatables.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\DataTables\datatables.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\DataTables\datatables.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\DataTables\DateTime-1.3.0\css\dataTables.dateTime.css" />
+    <Content Include="vendor\DataTables\DateTime-1.3.0\css\dataTables.dateTime.min.css" />
+    <Content Include="vendor\DataTables\DateTime-1.3.0\js\dataTables.dateTime.js" />
+    <Content Include="vendor\DataTables\DateTime-1.3.0\js\dataTables.dateTime.min.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.bootstrap.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.bootstrap4.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.bootstrap5.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.bulma.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.bulma.min.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.dataTables.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.dataTables.min.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.foundation.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.foundation.min.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.jqueryui.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.semanticui.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\editor.semanticui.min.css" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\images\ajax-loader-small.gif" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\images\ajax-loader.gif" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\images\calender.png" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\images\close.png" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\images\shadow_left.png" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\images\shadow_right.png" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\dataTables.editor.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\dataTables.editor.min.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap4.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap5.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bulma.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bulma.min.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.dataTables.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.dataTables.min.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.foundation.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.foundation.min.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.jqueryui.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.semanticui.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.semanticui.min.js" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\Readme.txt" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.bootstrap.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.bootstrap4.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.bootstrap5.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.bulma.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.bulma.min.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.dataTables.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.dataTables.min.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.foundation.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.foundation.min.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.jqueryui.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.semanticui.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\css\fixedColumns.semanticui.min.css" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\dataTables.fixedColumns.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\dataTables.fixedColumns.min.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.bootstrap.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.bootstrap4.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.bootstrap5.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.bulma.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.bulma.min.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.dataTables.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.dataTables.min.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.foundation.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.foundation.min.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.jqueryui.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.semanticui.js" />
+    <Content Include="vendor\DataTables\FixedColumns-4.2.1\js\fixedColumns.semanticui.min.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.bootstrap.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.bootstrap4.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.bootstrap5.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.bulma.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.bulma.min.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.dataTables.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.dataTables.min.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.foundation.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.foundation.min.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.jqueryui.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.semanticui.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\css\fixedHeader.semanticui.min.css" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\dataTables.fixedHeader.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\dataTables.fixedHeader.min.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.bootstrap.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.bootstrap4.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.bootstrap5.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.bulma.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.bulma.min.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.dataTables.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.dataTables.min.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.foundation.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.foundation.min.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.jqueryui.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.semanticui.js" />
+    <Content Include="vendor\DataTables\FixedHeader-3.3.1\js\fixedHeader.semanticui.min.js" />
+    <Content Include="vendor\DataTables\JSZip-2.5.0\jszip.js" />
+    <Content Include="vendor\DataTables\JSZip-2.5.0\jszip.min.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.bootstrap.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.bootstrap4.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.bootstrap5.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.bulma.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.bulma.min.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.dataTables.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.dataTables.min.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.foundation.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.foundation.min.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.jqueryui.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.semanticui.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\css\keyTable.semanticui.min.css" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\dataTables.keyTable.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\dataTables.keyTable.min.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.bootstrap.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.bootstrap4.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.bootstrap5.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.bulma.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.bulma.min.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.dataTables.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.dataTables.min.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.foundation.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.foundation.min.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.jqueryui.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.semanticui.js" />
+    <Content Include="vendor\DataTables\KeyTable-2.8.0\js\keyTable.semanticui.min.js" />
+    <Content Include="vendor\DataTables\pdfmake-0.1.36\pdfmake.js" />
+    <Content Include="vendor\DataTables\pdfmake-0.1.36\pdfmake.min.js" />
+    <Content Include="vendor\DataTables\pdfmake-0.1.36\vfs_fonts.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.bootstrap.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.bootstrap4.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.bootstrap5.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.bulma.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.bulma.min.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.dataTables.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.dataTables.min.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.foundation.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.foundation.min.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.jqueryui.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.semanticui.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\css\responsive.semanticui.min.css" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\dataTables.responsive.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\dataTables.responsive.min.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.bootstrap.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.bootstrap4.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.bootstrap5.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.bulma.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.bulma.min.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.dataTables.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.dataTables.min.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.foundation.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.foundation.min.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.jqueryui.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.semanticui.js" />
+    <Content Include="vendor\DataTables\Responsive-2.4.0\js\responsive.semanticui.min.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.bootstrap.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.bootstrap4.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.bootstrap5.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.bulma.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.bulma.min.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.dataTables.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.dataTables.min.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.foundation.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.foundation.min.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.jqueryui.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.semanticui.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\css\rowGroup.semanticui.min.css" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\dataTables.rowGroup.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\dataTables.rowGroup.min.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.bootstrap.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.bootstrap4.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.bootstrap5.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.bulma.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.bulma.min.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.dataTables.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.dataTables.min.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.foundation.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.foundation.min.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.jqueryui.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.semanticui.js" />
+    <Content Include="vendor\DataTables\RowGroup-1.3.0\js\rowGroup.semanticui.min.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.bootstrap.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.bootstrap4.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.bootstrap5.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.bulma.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.bulma.min.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.dataTables.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.dataTables.min.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.foundation.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.foundation.min.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.jqueryui.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.semanticui.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\css\rowReorder.semanticui.min.css" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\dataTables.rowReorder.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\dataTables.rowReorder.min.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.bootstrap.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.bootstrap4.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.bootstrap5.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.bulma.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.bulma.min.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.dataTables.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.dataTables.min.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.foundation.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.foundation.min.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.jqueryui.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.semanticui.js" />
+    <Content Include="vendor\DataTables\RowReorder-1.3.2\js\rowReorder.semanticui.min.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.bootstrap.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.bootstrap4.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.bootstrap5.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.bulma.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.bulma.min.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.dataTables.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.dataTables.min.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.foundation.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.foundation.min.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.jqueryui.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.semanticui.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\css\scroller.semanticui.min.css" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\dataTables.scroller.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\dataTables.scroller.min.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.bootstrap.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.bootstrap4.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.bootstrap5.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.bulma.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.bulma.min.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.dataTables.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.dataTables.min.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.foundation.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.foundation.min.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.jqueryui.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.semanticui.js" />
+    <Content Include="vendor\DataTables\Scroller-2.0.7\js\scroller.semanticui.min.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.bootstrap.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.bootstrap4.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.bootstrap5.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.bulma.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.bulma.min.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.dataTables.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.dataTables.min.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.foundation.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.foundation.min.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.jqueryui.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.semanticui.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\css\searchBuilder.semanticui.min.css" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\dataTables.searchBuilder.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\dataTables.searchBuilder.min.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.bootstrap.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.bootstrap4.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.bootstrap5.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.bulma.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.bulma.min.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.dataTables.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.dataTables.min.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.foundation.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.foundation.min.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.jqueryui.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.semanticui.js" />
+    <Content Include="vendor\DataTables\SearchBuilder-1.4.0\js\searchBuilder.semanticui.min.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.bootstrap.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.bootstrap4.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.bootstrap5.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.bulma.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.bulma.min.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.dataTables.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.dataTables.min.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.foundation.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.foundation.min.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.jqueryui.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.semanticui.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\css\searchPanes.semanticui.min.css" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\dataTables.searchPanes.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\dataTables.searchPanes.min.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.bootstrap.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.bootstrap4.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.bootstrap5.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.bulma.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.bulma.min.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.dataTables.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.dataTables.min.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.foundation.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.foundation.min.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.jqueryui.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.semanticui.js" />
+    <Content Include="vendor\DataTables\SearchPanes-2.1.1\js\searchPanes.semanticui.min.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.bootstrap.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.bootstrap4.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.bootstrap5.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.bulma.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.bulma.min.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.dataTables.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.dataTables.min.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.foundation.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.foundation.min.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.jqueryui.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.semanticui.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\css\select.semanticui.min.css" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\dataTables.select.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\dataTables.select.min.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.bootstrap.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.bootstrap4.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.bootstrap5.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.bulma.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.bulma.min.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.dataTables.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.dataTables.min.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.foundation.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.foundation.min.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.jqueryui.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.semanticui.js" />
+    <Content Include="vendor\DataTables\Select-1.6.0\js\select.semanticui.min.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.bootstrap.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.bootstrap.min.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.bootstrap4.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.bootstrap4.min.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.bootstrap5.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.bootstrap5.min.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.bulma.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.bulma.min.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.dataTables.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.dataTables.min.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.foundation.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.foundation.min.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.jqueryui.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.jqueryui.min.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.semanticui.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\css\stateRestore.semanticui.min.css" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\dataTables.stateRestore.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\dataTables.stateRestore.min.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.bootstrap.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.bootstrap.min.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.bootstrap4.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.bootstrap4.min.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.bootstrap5.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.bootstrap5.min.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.bulma.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.bulma.min.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.dataTables.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.dataTables.min.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.foundation.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.foundation.min.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.jqueryui.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.jqueryui.min.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.semanticui.js" />
+    <Content Include="vendor\DataTables\StateRestore-1.2.1\js\stateRestore.semanticui.min.js" />
+    <Content Include="View.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReservasExportaciones.dnn" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BuildScripts\ModulePackage.targets" />
+    <Content Include="BuildScripts\MSBuild.Community.Tasks.Targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\View.ascx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\Edit.ascx.resx" />
+    <Content Include="App_LocalResources\Settings.ascx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\Uninstall.SqlDataProvider" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\common.scss" />
+    <Content Include="vendor\DataTables\Buttons-2.3.4\css\mixins.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\scss\bubble.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\scss\datatable.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\scss\envelope.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\scss\fields.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\scss\inline.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\scss\lightbox.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\scss\main.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\scss\mixins.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\scss\processing.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\css\scss\upload.scss" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\dataTables.editor.min.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\dataTables.editor.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap.min.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap4.min.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap4.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap5.min.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bootstrap5.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bulma.min.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.bulma.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.dataTables.min.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.dataTables.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.foundation.min.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.foundation.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.jqueryui.min.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.jqueryui.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.semanticui.min.mjs" />
+    <Content Include="vendor\DataTables\Editor-2.0.10\js\editor.semanticui.mjs" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>55810</DevelopmentServerPort>
+          <DevelopmentServerVPath>
+          </DevelopmentServerVPath>
+          <IISUrl>http://dnndev.me/desktopmodules/ReservasExportaciones</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://dnndev.me</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <Extension>zip</Extension>
+    <DNNFileName>ReservasExportaciones</DNNFileName>
+    <PackageName>ReservasExportaciones</PackageName>
+    <MSBuildCommunityTasksPath>$(SolutionDir)\BuildScripts</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <Import Project="BuildScripts\ModulePackage.Targets" />
+  <Target Name="AfterBuild" DependsOnTargets="PackageModule">
+  </Target>
+</Project>

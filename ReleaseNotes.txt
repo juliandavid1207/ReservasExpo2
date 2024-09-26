@@ -1,0 +1,22 @@
+﻿<h3>ReservasExportaciones</h3>
+<p class="Contributor">
+	allnet.com.co <br />
+	<a href="mailto:contacto@allnet.com.co">contacto@allnet.com.co</a><br />
+	<a href=https://www.allnet.com.co/>https://www.allnet.com.co/</a><br />
+	This extension was created using <a href="https://www.christoc.com">Christoc's</a> Module Development Templates for DNN.
+</p>
+<hr/>
+<div class="License">
+	<h3>About the ReservasExportaciones</h3>
+	<p class="Owner">
+		<b>Version CHANGEME</b><br /><br />
+	</p>
+	<p>Permite agregar la documentación e información por parte de los clientes para realizar la exportación y los revisa un agente.</p>
+	
+	<h4>Bug Fixes</h4>
+	<ul>
+		<li>Fix creación de adjuntos e items.</li>
+		
+	</ul>
+	
+</div>
