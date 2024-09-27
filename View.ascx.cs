@@ -10,6 +10,7 @@
 ' 
 */
 
+using AllNet.Modules.ReservasExportaciones.Components.Controls;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Framework;
@@ -57,7 +58,9 @@ namespace AllNet.Modules.ReservasExportaciones
         {
             try
             {
-
+                ControlObservations control = (ControlObservations)Page.LoadControl("~/DesktopModules/ReservasExportaciones/Components/Controls/ControlObservations.ascx");
+                control.ID = "ControlObservations";
+                phMain.Controls.Add(control);
             }
             catch (Exception exc) //Module failed to load
             {

@@ -42,7 +42,44 @@
     border-radius: 0;
 }
 .tabla-contenedor {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tabla-contenedor-tbl {
     overflow-y: auto;
-/*    border: 3px solid red;*/
-/*    max-height: 350px;*/
+    width: 100%;
+    height: 80%;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+}
+
+.cont-boxcomment {
+    width: 100%;
+    height: 100px;
+}
+
+.comments {
+    width: 100%;
+    height: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container-comments {
+    max-height: 100%;
+    width: 100%;
+    border: 1px gray;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.cont-btn {
+    margin: 5px;
 }

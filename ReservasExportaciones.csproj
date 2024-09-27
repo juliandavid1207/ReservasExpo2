@@ -95,6 +95,13 @@
     <Compile Include="Components\Controllers\CommentsController.cs" />
     <Compile Include="Components\Controllers\FilesExpoController.cs" />
     <Compile Include="Components\Controllers\MasterController.cs" />
+    <Compile Include="Components\Controls\ControlObservations.ascx.cs">
+      <DependentUpon>ControlObservations.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Controls\ControlObservations.ascx.designer.cs">
+      <DependentUpon>ControlObservations.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Components\FeatureController.cs" />
     <Compile Include="Components\Models\BookingsModel.cs" />
     <Compile Include="Components\Models\CommentsModel.cs" />
@@ -135,6 +142,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Components\Controls\ControlObservations.ascx" />
     <Content Include="Edit.ascx" />
     <Content Include="License.txt" />
     <Content Include="module.css" />

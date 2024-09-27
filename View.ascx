@@ -1,167 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="false" CodeBehind="View.ascx.cs" Inherits="AllNet.Modules.ReservasExportaciones.View" %>
+<%@ Register Src="~/desktopmodules/ReservasExportaciones/Components/Controls/ControlObservations.ascx" TagPrefix="uc1" TagName="ControlObservations" %>
+
 <link rel="stylesheet" type="text/css" href="/DesktopModules/ReservasExportaciones/vendor/DataTables/datatables.min.css" />
-<style>
-    .tabla-contenedor {
-    overflow-y: auto;
-    max-height: 500px;
-}
-    
-.modal {
-    text-align: center;
-    padding: 0 !important; 
-}
-
-.modal:before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    margin-right: -4px;  
-}
-
-.modal-dialog {
-    display: inline-block;
-    text-align: left;
-    vertical-align: middle;
-}
-
-.modal.center-opening {
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    transform: scale(0.5);
-    opacity: 0;
-}
-
-.modal.center-opening.show {
-    transform: scale(1);
-    opacity: 1;
-}
-
-.modal-lg-custom {
-    width: 70%;
-}
-
-.modal-dialog-custom {
-    height: 70%;
-}
-
-.modal-content-custom {
-    height: 100%;
-    border-radius: 0; 
-}
-.tabla-contenedor {
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-}
-.tabla-contenedor-tbl {
-    overflow-y: auto;
-    width:100%;
-    height:80%;
-}
-textarea {
-        width: 100%;
-        height: 100px;
-}
-.cont-boxcomment{
-     width: 100%;
-     height: 100px;
-}
-.comments {
-    width: 100%;
-    height: 50%;    
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.container-comments {
-    max-height: 100%;
-    width: 100%;
-    border: 1px gray;
-    overflow: hidden;
-    overflow-y: auto;
-}
-.cont-btn {
-    margin:5px;
-}
-</style>
-<asp:PlaceHolder ID="phMain" runat="server">
-    <div class="container">
-         <b>Seleccionar puerto:</b> 
-         <th>
-         <select id="puertoFilter">
-             <option value="BAQ">Barranquilla</option>
-             <option value="CTG">Cartagena</option>
-             <option value="BUN">Buenaventura</option>
-             <option value="SMR">Santa Marta</option>
-             <option value="TRB">Turbo</option>
-	     <option value="">Todos los Puertos</option>
-             <!-- Add more options as needed -->
-         </select>
-        </th>
-        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered display align-middle text-center" id="tbl_bookings" width="100%">
-            <thead>
-                <tr>
-                   
-                </tr>
-
-            </thead>
-        </table>
-    </div>   
-    <div class="modal fade " id="myModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" >
-        <div class="modal-dialog modal-lg modal-vertical-centered modal-dialog-custom modal-lg-custom" role="document">
-            <div class="modal-content modal-content-custom">
-                <div class="modal-header">
-                    <h4 class="modal-title text-center" id="myModalLabel">Archivos adjuntos</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body tabla-contenedor" id="modal-body">
-                    <div class="tabla-contenedor-tbl">
-                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered display align-middle text-center" id="tbl_files" width="100%">
-                            <thead>
-                            </thead>
-                        </table>
-                    </div>
-                </div>             
-            </div>
-        </div>
-    </div>
-    <div class="modal fade " id="CommentsModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" >
-        <div class="modal-dialog modal-lg modal-vertical-centered modal-dialog-custom modal-lg-custom" role="document">
-            <div class="modal-content modal-content-custom">
-                <div class="modal-header">
-                    <h2 class="modal-title text-center" id="myModalLabel2">Comentarios</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body tabla-contenedor" id="modal-body2">
-                    <div class="container-comments">
-                        <div class="comments">
-                            <div class="tabla-comentarios-tbl">
-                                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered display align-middle text-center" id="tbl_comments" width="100%">
-                                    <thead>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="comments">
-                            <div class="cont-boxcomment">
-                                <input type="hidden" id="bl_orig">
-                                <textarea id="comentario" name="comentario" required></textarea>
-                            </div>
-                            <div class="cont-btn">
-                                <button type="button" id="btn-admin" class="btn btn-primary" onclick="AgregarComentario()">Agregar comentario</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
-</asp:PlaceHolder>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script type="text/javascript" src="/DesktopModules/ReservasExportaciones/vendor/DataTables/datatables.min.js"></script>
 <script>
@@ -176,6 +16,7 @@ textarea {
     const isAgent = "<%=IsAgente%>";
     var nitUser = "<%=NitUser%>";
     const sf = $.ServicesFramework(moduleId);
+    const urlApi = sf.getServiceRoot('ReservasExportaciones');
     const i18 = {
         create: {
             button: "Agregar",
@@ -244,12 +85,11 @@ textarea {
     var btn_child = {};
     var tableComments = {};
     var row2 = null;
-
+    var bl_prueba = '';
     function AgregarComentario() {
         var bl = document.getElementById("bl_orig").value;
         var comment = document.getElementById("comentario").value;
         if (comment.trim() != "") {
-            const urlApi = sf.getServiceRoot('ReservasExportaciones');
             $.ajax({
                 url: urlApi + 'Comments/InsertComment',
                 beforeSend: sf.setModuleHeaders,
@@ -277,8 +117,6 @@ textarea {
 
     function CambiarEstado(bl, control) {
         var selectedOptionId = control.options[control.selectedIndex].id;
-
-        const urlApi = sf.getServiceRoot('ReservasExportaciones');
         $.ajax({
             url: urlApi + 'Bookings/UpdateState',
             beforeSend: sf.setModuleHeaders,
@@ -301,75 +139,7 @@ textarea {
         });
     }
 
-    function VerObservaciones(bl) {
-        $('#CommentsModal').modal('show');
-        $('#CommentsModal').addClass('center-opening show');
-        $('body').addClass('modal-open');
-
-
-        $('#CommentsModal').on('hidden.bs.modal', function () {
-            $(this).removeClass('center-opening show');
-            $('body').removeClass('modal-open');
-        });
-
-        document.getElementById("bl_orig").value = bl;
-        const urlApi = sf.getServiceRoot('ReservasExportaciones');
-        tableComments = $('#tbl_comments').DataTable({
-            dom: 'Bfrtip',
-            serverSide: true,
-            processing: true,
-            destroy: true,
-            order: [1, 'asc'],
-            ajax: {
-                url: urlApi + 'Comments/Get',
-                beforeSend: sf.setModuleHeaders,
-                data: function (data) {
-                    data.cn = cn_hash;
-                    data.pkey = pkey;
-                    data.Booking = bl;
-                    data.nituser = nitUser;
-                    data.isagent = isAgent;
-
-                    return data;
-                },
-                type: 'POST'
-            },
-            columns: [
-                {
-                    title: "ID_COMMENT",
-                    data: "ID_COMMENT",
-                    visible: false,
-                    key: true
-                },
-                {
-                    title: "Reserva",
-                    visible: false,
-                    data: "BL_ORIG"
-                },
-                {
-                    title: "Observación",
-                    data: "COMMENT"
-                },
-                {
-                    title: "Fecha",
-                    data: "COMMENT_DATE",
-                    defaultContent: ""
-                }
-
-            ],
-            select: {
-                style: 'os',
-                selector: 'td:not(:first-child)'
-            },
-
-            lengthChange: false,
-            language: lang
-        });
-
-    }
-
     function leerDocumentos(bl) {
-        const urlApi = sf.getServiceRoot('ReservasExportaciones');       
         tableFiles = $('#tbl_files').DataTable({
             dom: 'Bfrtip',
             serverSide: true,
@@ -393,7 +163,7 @@ textarea {
                 {
                     className: 'dt-control',
                     orderable: false,
-                    searchable:false,
+                    searchable: false,
                     data: null,
                     defaultContent: '',
                     width: '10%'
@@ -410,7 +180,7 @@ textarea {
                 {
                     title: "CATEGORIA",
                     data: "BOOKINGS_EXPO_DOCS.CATEGORIA"
-                },             
+                },
                 {
                     title: "ADJUNTO",
                     data: "BOOKINGS_EXPO_DOCS.ADJUNTO",
@@ -422,12 +192,12 @@ textarea {
                     defaultContent: "",
                 }
 
-            ],       
+            ],
             select: {
-                style: 'os',                
+                style: 'os',
                 selector: 'td:not(:first-child)'
             },
-            
+
             lengthChange: false,
             language: lang,
             buttons: [
@@ -456,29 +226,29 @@ textarea {
                 { extend: 'remove', className: 'btn btn-primary', editor: editor }
 
             ]
-        });   
+        });
 
 
-        
+
 
         tableFiles.off('click', 'td.dt-control').on('click', 'td.dt-control', function () {
-         
-            let tr = $(this).closest('tr');         
+
+            let tr = $(this).closest('tr');
 
             btn_child = $(this);
 
             let row = tableFiles.row(tr);
 
             if (row.child.isShown()) {
-                
-                destroyChild(row);             
-                tr.removeClass('shown');    
-           
+
+                destroyChild(row);
+                tr.removeClass('shown');
+
             }
             else {
                 // Open this row
                 createChild(row);
-                tr.addClass('shown');                
+                tr.addClass('shown');
             }
         });
 
@@ -515,7 +285,7 @@ textarea {
                             data.isagent = isAgent;
                             data.Booking = booking;
                             data.Codigo = tableFiles.row({ selected: true }).data() !== undefined ? tableFiles.row({ selected: true }).data().CODIGO : '';
-                            data.ID = row.data().ID;    
+                            data.ID = row.data().ID;
                             return data;
                         }
                     },
@@ -540,7 +310,7 @@ textarea {
                     {
                         "label": "CONTENEDOR:",
                         "name": "DETCARGAB.IDEN",
-                       
+
                     },
                     {
                         "label": "BULTOS:",
@@ -548,7 +318,7 @@ textarea {
                         "attr": {
                             type: 'number'
                         }
-                    },          
+                    },
                     {
                         "label": "PESO:",
                         "name": "DETCARGAB.PESO_ORIG",
@@ -564,10 +334,10 @@ textarea {
                     }
                 ],
                 i18n: i18
-            });  
+            });
             btn_child.prop('disabled', true);
             row.child(tableChild).show();
-            
+
             fetch(urlApi + 'Cntr/Get2', {
                 method: 'POST',
                 headers: {
@@ -587,19 +357,19 @@ textarea {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                  
+
                     return response.json();
                 })
                 .then(function (data) {
                     btn_child.prop('disabled', false);
                     tableCntr = tableChild.DataTable({
                         dom: 'Bfrtip',
-                        pageLength: 5,                        
+                        pageLength: 5,
                         data: data.data, // Los datos deben ser proporcionados aquí
-                        columns: [                        
+                        columns: [
                             { title: 'Contenedor', data: 'DETCARGAB.IDEN' },
                             { title: 'Bultos', data: 'DETCARGAB.BULTOS' },
-                            { title: 'Peso', data: 'DETCARGAB.PESO_ORIG' }                      
+                            { title: 'Peso', data: 'DETCARGAB.PESO_ORIG' }
                         ],
                         select: true,
                         language: lang,
@@ -623,11 +393,11 @@ textarea {
                     if (!/^\d+(\.\d+)?$/.test(data.data[0].DETCARGAB.BULTOS)) {
                         var numeroConComa = data.data[0]['PESONETO'];
                         var hola = 2;
-                        
+
                     }
                     else {
                         return 'hola'
-                    }               
+                    }
 
 
                     console.log('Datos del nuevo registro:', data.data);
@@ -635,14 +405,14 @@ textarea {
             });
         }
 
-        function destroyChild(row) {           
+        function destroyChild(row) {
             var table2 = $('table', row.child());
             table2.detach();
-            table2.DataTable().destroy();    
-         
+            table2.DataTable().destroy();
+
             row.child.hide();
-   
-      
+
+
         }
 
         booking = bl.trim();
@@ -657,14 +427,13 @@ textarea {
         $('#myModal').on('hidden.bs.modal', function () {
             $(this).removeClass('center-opening show');
             $('body').removeClass('modal-open');
-        }); 
-             
-        
-        
+        });
+
+
+
     }
 
     $(document).ready(function () {
-        const urlApi = sf.getServiceRoot('ReservasExportaciones');
         editor = new DataTable.Editor({
             ajax: {
                 create: {
@@ -677,7 +446,7 @@ textarea {
                         data.nituser = nitUser;
                         data.isagent = isAgent;
                         data.Booking = booking;
-                        data.Codigo = tableFiles.row({ selected: true }).data() !== undefined ? tableFiles.row({ selected: true }).data().CODIGO:'';
+                        data.Codigo = tableFiles.row({ selected: true }).data() !== undefined ? tableFiles.row({ selected: true }).data().CODIGO : '';
                         return data;
                     }
                 },
@@ -760,7 +529,7 @@ textarea {
                 }
             ],
             i18n: i18
-        });   
+        });
 
         table = $('#tbl_bookings').DataTable({
             dom: 'Bfrtip',
@@ -883,7 +652,7 @@ textarea {
             //fila = table.row({ selected: true }).data();
             nitUser = table.row({ selected: true }).data() !== undefined ? table.row({ selected: true }).data().TER_FACT.trim() : nitUser;
             $('.btn-editar').removeClass('disabled');
-        });  
+        });
 
         editor.on('open', function (e, data) {
             editor.field('BOOKING').val(booking);
@@ -896,7 +665,7 @@ textarea {
         });
 
 
-    
+
 
 
 
@@ -918,7 +687,50 @@ textarea {
                 }
             }
         });
-        
+
 
     });
 </script>
+<asp:PlaceHolder ID="phMain" runat="server">
+    <div class="container">
+         <b>Seleccionar puerto:</b> 
+         <th>
+         <select id="puertoFilter">
+             <option value="BAQ">Barranquilla</option>
+             <option value="CTG">Cartagena</option>
+             <option value="BUN">Buenaventura</option>
+             <option value="SMR">Santa Marta</option>
+             <option value="TRB">Turbo</option>
+	     <option value="">Todos los Puertos</option>
+             <!-- Add more options as needed -->
+         </select>
+        </th>
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered display align-middle text-center" id="tbl_bookings" width="100%">
+            <thead>
+                <tr>
+                   
+                </tr>
+
+            </thead>
+        </table>
+    </div>   
+    <div class="modal fade " id="myModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" >
+        <div class="modal-dialog modal-lg modal-vertical-centered modal-dialog-custom modal-lg-custom" role="document">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" id="myModalLabel">Archivos adjuntos</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body tabla-contenedor" id="modal-body">
+                    <div class="tabla-contenedor-tbl">
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered display align-middle text-center" id="tbl_files" width="100%">
+                            <thead>
+                            </thead>
+                        </table>
+                    </div>
+                </div>             
+            </div>
+        </div>
+    </div>
+</asp:PlaceHolder>
+
