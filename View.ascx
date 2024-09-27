@@ -86,35 +86,7 @@
     var tableComments = {};
     var row2 = null;
     var bl_prueba = '';
-    function AgregarComentario() {
-        var bl = document.getElementById("bl_orig").value;
-        var comment = document.getElementById("comentario").value;
-        if (comment.trim() != "") {
-            $.ajax({
-                url: urlApi + 'Comments/InsertComment',
-                beforeSend: sf.setModuleHeaders,
-                data: {
-                    cn: cn_hash,
-                    pkey: pkey,
-                    Booking: bl,
-                    nituser: nitUser,
-                    isagent: isAgent,
-                    Comment: comment
-                },
-                type: 'POST',
-                success: function (response) {
-                    console.log(response);
-                    alert("Comentario agregado");
-                },
-                error: function (error) {
-                    console.error(error);
-                }
-            });
-            tableComments.ajax.reload();
-            document.getElementById("comentario").value = "";
-        }
-    }
-
+    
     function CambiarEstado(bl, control) {
         var selectedOptionId = control.options[control.selectedIndex].id;
         $.ajax({
