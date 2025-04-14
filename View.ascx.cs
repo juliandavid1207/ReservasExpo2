@@ -58,9 +58,13 @@ namespace AllNet.Modules.ReservasExportaciones
         {
             try
             {
-                ControlObservations control = (ControlObservations)Page.LoadControl("~/DesktopModules/ReservasExportaciones/Components/Controls/ControlObservations.ascx");
-                control.ID = "ControlObservations";
-                phMain.Controls.Add(control);
+                ObservationsControl observations_control = (ObservationsControl)Page.LoadControl("~/DesktopModules/ReservasExportaciones/Components/Controls/ObservationsControl.ascx");
+                observations_control.ID = "ObservationsControl";
+                phMain.Controls.Add(observations_control);
+
+                AttachmentsControl attachments_control = (AttachmentsControl)Page.LoadControl("~/DesktopModules/ReservasExportaciones/Components/Controls/AttachmentsControl.ascx");
+                attachments_control.ID = "AttachmentsControl";
+                phMain.Controls.Add(attachments_control);
             }
             catch (Exception exc) //Module failed to load
             {

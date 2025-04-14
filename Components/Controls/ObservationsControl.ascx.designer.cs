@@ -11,7 +11,7 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controls
 {
 
 
-    public partial class ControlObservations
+    public partial class ObservationsControl
     {
     }
 }

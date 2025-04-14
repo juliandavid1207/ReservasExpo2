@@ -68,6 +68,8 @@ namespace AllNet.Modules.ReservasExportaciones
                     {
                         drpRolAgente.SelectedValue = Settings["RolAgente"].ToString();
                     }
+                    //if (Settings.Contains("txtNIT"))
+                    //    txtNIT.Text = Settings["txtNIT"].ToString();
 
                 }
             }
@@ -93,6 +95,8 @@ namespace AllNet.Modules.ReservasExportaciones
                 modules.UpdateModuleSetting(ModuleId, "SecretKey", txtKey.Text);
                 modules.UpdateModuleSetting(ModuleId, "ConnectionString", drpConnectionString.SelectedValue);
                 modules.UpdateModuleSetting(ModuleId, "RolAgente", drpRolAgente.SelectedValue);
+                //modules.UpdateModuleSetting(ModuleId, "SetConnection", txtNIT.Text);
+                //modules.UpdateTabModuleSetting(TabModuleId, "SetConnection", txtNIT.Text);
 
                 //tab module settings
                 //modules.UpdateTabModuleSetting(TabModuleId, "Setting1",  txtSetting1.Text);

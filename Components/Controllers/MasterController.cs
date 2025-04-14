@@ -59,6 +59,7 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
             }
             set { _dbType = value; }
         }
+
         public bool IsAgent { get; set; } = false;
         public string NitUser { get; set; } = "";
         public virtual IHttpActionResult Rest(HttpRequest request) { return Json("No implementado"); }
@@ -69,6 +70,7 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, "Hola");
         }
+
         [HttpPost]
         public virtual IHttpActionResult Get()
          {
@@ -76,6 +78,7 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
             {
                 var request = HttpContext.Current.Request;               
                 NitUser = request.Form.GetValues("nituser").FirstOrDefault();
+                //NitUser = "860000006";
                 IsAgent = Convert.ToBoolean(request.Form.GetValues("isagent").FirstOrDefault());
                 if (!String.IsNullOrEmpty(request.Form["pkey"]))
                 {
@@ -84,7 +87,6 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
                 if (!String.IsNullOrEmpty(request.Form["cn"]))
                     ConnectionString = Config.GetConnectionString(RC4.Decrypt(SecretKey, request.Form["cn"].ToString()));
                 return Rest(request);
-
             }
             catch (Exception ex)
             {

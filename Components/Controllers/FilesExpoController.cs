@@ -1,9 +1,12 @@
-﻿using AllNet.Modules.ReservasExportaciones.Components.Models;
+﻿using AllNet.Modules.ReservasExportaciones.Abstractions;
+using AllNet.Modules.ReservasExportaciones.Components.Models;
+using AllNet.Modules.ReservasExportaciones.Services;
 using DataTables;
 using DotNetNuke.Common.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web;
 using System.Web.Http;
@@ -12,6 +15,11 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
 {
     public class FilesExpoController : MasterController
     {
+        private readonly IBookingsServices _bookingsServices;
+        public FilesExpoController()
+        {
+            _bookingsServices = new BookingServices();
+        }
         public override IHttpActionResult Rest(HttpRequest request)
         {
             using (var db = new Database(DbType, ConnectionString))
@@ -19,6 +27,8 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
                 string bl_orig = String.Empty;
                 string path = String.Empty;
                 var r_query = request.QueryString;
+                var BULTOS = request.Form.GetValues(3).FirstOrDefault();
+                var PESO = request.Form.GetValues(4).FirstOrDefault();
                 if (!String.IsNullOrEmpty(request.Form["BOOKING"]) || !String.IsNullOrEmpty(request.QueryString["BOOKING"]))
                 {
                     bl_orig = !String.IsNullOrEmpty(request.Form["BOOKING"]) ? request.Form["BOOKING"].ToString() : String.Empty;
@@ -46,6 +56,17 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
                     .Field(new Field("CATEGORIA")
                         .Validator(Validation.NotEmpty())
                     )
+                    .Field(new Field("PESO")
+                        .Validator(Validation.NotEmpty())
+                        .DbType(System.Data.DbType.Decimal)
+                    )
+                    .Field(new Field("BULTOS")
+                        .Validator(Validation.NotEmpty())
+                        .DbType(System.Data.DbType.Decimal)
+                    )
+                    .Field(new Field("COMENTARIO")
+                        .Validator(Validation.NotEmpty())                      
+                    )
                     .Field(new Field("ADJUNTO")
                            .Upload(new Upload(path + @"__NAME_____ID____EXTN__")
                                    .Db("ARCHIVOS_BOOKINGS", "id", new Dictionary<string, object>
@@ -70,7 +91,12 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
                            )
                     .Field(new Field("CODIGO")
                         .Validator(Validation.NotEmpty())
-                    )                 
+                    )
+                    .Field(new Field("ESTADO")
+                        .Validator(Validation.NotEmpty())
+                        .DbType(System.Data.DbType.Int32)
+                        .SetValue(0)
+                    )
                     .MJoin(new MJoin("DETCARGAB")
                        .Model<DetCargaBModel>()                       
                        .Link("DETCARGAB.ID_BOOKINGS_EXPO", "BOOKINGS_EXPO_DOCS.ID")
@@ -100,12 +126,24 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
 
         }
 
-        
+        [HttpPut]
+        [ActionName("UpdateState")]
+        public IHttpActionResult Put()
+        {
+            var request = HttpContext.Current.Request;
+            var state_id = request.Form.GetValues("state_id").FirstOrDefault();
+            var bl = request.Form.GetValues("Booking").FirstOrDefault();
+            var codigo = request.Form.GetValues("Codigo").FirstOrDefault();
+            var result = _bookingsServices.UpdateState(bl,codigo, state_id);
+            return Ok(result);
+        }
 
 
 
-            
 
-        
+
+
+
+
     }
 }

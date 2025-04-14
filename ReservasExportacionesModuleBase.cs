@@ -52,7 +52,7 @@ namespace AllNet.Modules.ReservasExportaciones
                 return IsUserHost ? "" : UserController.Instance.GetCurrentUserInfo().Profile.GetPropertyValue("NIT").ToString();
             }
         }
-        public bool IsAgente
+        public bool IsAgent
         {
             get
             {

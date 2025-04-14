@@ -71,6 +71,7 @@ namespace AllNet.Modules.ReservasExportaciones.Data
             return newConnection;
         }
 
+  
         #endregion
 
         #region Abstract methods

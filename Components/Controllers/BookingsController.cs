@@ -1,4 +1,6 @@
-﻿using AllNet.Modules.ReservasExportaciones.Components.Models;
+﻿using AllNet.Modules.ReservasExportaciones.Abstractions;
+using AllNet.Modules.ReservasExportaciones.Components.Models;
+using AllNet.Modules.ReservasExportaciones.Services;
 using DataTables;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,11 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
 {
     public class BookingsController : MasterController
     {
+        private readonly IBookingsServices _bookingsServices;
+        public BookingsController()
+        {
+            _bookingsServices = new BookingServices();
+        }
         public override IHttpActionResult Rest(HttpRequest request)
         {
 
@@ -39,36 +46,6 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
                         .Process(request)
                         .Data();
                 return Json(response_nit);
-            }
-
-        }
-
-        public IHttpActionResult UpdateState()
-        {
-            var request = HttpContext.Current.Request;
-            var state_id = request.Form.GetValues("state_id").FirstOrDefault();
-            var bl = request.Form.GetValues("Booking").FirstOrDefault();
-
-            try
-            {
-                using (var db = new Database(DbType, ConnectionString))
-                {
-                    Dictionary<string, dynamic> state = new Dictionary<string, dynamic>
-                    {
-                        {"CGO_DSC", state_id }
-                    };
-
-                    Dictionary<string, dynamic> condition = new Dictionary<string, dynamic>
-                    {
-                        {"BL_ORIG", bl}
-                    };
-                    db.Update("BOOKINGS", state, condition);
-                    return Ok();
-                }
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
             }
 
         }

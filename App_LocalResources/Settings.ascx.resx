@@ -121,21 +121,9 @@
     <value>ReservasExportaciones Settings</value>
   </data>
   <data name="lblCon.Help" xml:space="preserve">
-    <value>Seleccione la cadena de conexión a la BD.</value>
+    <value>Ingrese la cadena de conexión</value>
   </data>
   <data name="lblCon.Text" xml:space="preserve">
     <value>Connection string</value>
-  </data>
-  <data name="lblKey.Help" xml:space="preserve">
-    <value>Frase de secreta de cifrado de settings y cadenas</value>
-  </data>
-  <data name="lblKey.Text" xml:space="preserve">
-    <value>Key cifrado</value>
-  </data>
-  <data name="lblRol.Help" xml:space="preserve">
-    <value>Seleccione el Rol del agente.</value>
-  </data>
-  <data name="lblRol.Text" xml:space="preserve">
-    <value>Rol Agente</value>
   </data>
 </root>
