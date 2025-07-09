@@ -125,6 +125,10 @@
             cutoff = `${year}-${month}-${day}T${timePart || '00:00:00'}`;
         }
 
+        if (/T\d:/.test(cutoff)) {
+            cutoff = cutoff.replace(/T(\d):/, "T0$1:");
+        }
+
         const cutoffDate = new Date(cutoff);
      
         if (isNaN(cutoffDate)) {
