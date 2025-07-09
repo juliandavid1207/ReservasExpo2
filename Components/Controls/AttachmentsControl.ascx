@@ -37,24 +37,40 @@
      </div>
  </div>
 <script>
-    function mostrarModal(bl, codigo, control) {
+    function mostrarModal(bl, codigo, control, isagent) {
         debugger;
         var selectedOptionId = control.options[control.selectedIndex].id;
-        $('#modalBodyContent').html(`
-       <p class="text-danger text-center">
-         <i class="bi bi-question-circle"></i>¿Desea actualizar el estado a: ${obtenerEstado(selectedOptionId)}?
-       </p>
-       `);
 
-        if ($('#enviarEstado').hasClass('hidden')) {
-            $('#enviarEstado').removeClass('hidden');
+        if (isagent == "True") {
+                $('#modalBodyContent').html(`
+           <p class="text-danger text-center">
+             <i class="bi bi-question-circle"></i>¿Desea actualizar el estado a: ${obtenerEstado(selectedOptionId)}?
+           </p>
+           `);
+           
+            if ($('#enviarEstado').hasClass('hidden')) {
+                $('#enviarEstado').removeClass('hidden');
+            }
+           
+            $('#enviarEstado')
+                .data('bl', bl)
+                .data('estado', selectedOptionId)
+                .data('codigo', codigo);
+           
+            $('#solicitarModal').modal('show');
         }
+    }
 
-        $('#enviarEstado')
-            .data('bl', bl)
-            .data('estado', selectedOptionId)
-            .data('codigo', codigo);
-
+    function mostrarModal2() {
+    
+        debugger;
+        /*var selectedOptionId = control.options[control.selectedIndex].id;*/
+        $('#modalBodyContent').html(`
+        <p class="text-danger text-center">
+          <i class="bi bi-question-circle"></i>Estimado cliente, favor tener en cuenta que el cut-off físico para recibo de SAES se encuentra vencido, el envío tardío tiene un costo aplicable de $190.000 + IVA
+        </p>
+        `);       
+        $('#enviarEstado').addClass('hidden');
         $('#solicitarModal').modal('show');
     }
 
@@ -101,7 +117,39 @@
         });
     });
 
-    function leerDocumentos(bl) {
+    function mensajeCutOff(cutoff) {
+        
+        if (typeof cutoff === 'string' && cutoff.includes('/')) {
+            const [datePart, timePart] = cutoff.split(' ');
+            const [day, month, year] = datePart.split('/');
+            cutoff = `${year}-${month}-${day}T${timePart || '00:00:00'}`;
+        }
+
+        const cutoffDate = new Date(cutoff);
+     
+        if (isNaN(cutoffDate)) {
+            console.error("Fecha cutoff inválida:", cutoff);
+            return;
+        }
+
+        const today = new Date();
+
+        const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const cutoffOnly = new Date(cutoffDate.getFullYear(), cutoffDate.getMonth(), cutoffDate.getDate());
+
+        const diffInMs = cutoffOnly - todayOnly;
+        const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+        const uploadDeadline = new Date(cutoffOnly);
+        uploadDeadline.setDate(uploadDeadline.getDate() - 1);
+
+        if (diffInDays <= 1) {
+            mostrarModal2();
+        }
+    }
+
+    function leerDocumentos(bl, cutoff) {
+        mensajeCutOff(cutoff);
         tableFiles = $('#tbl_files').DataTable({
             dom: 'Bfrtip',
             serverSide: true,
@@ -152,6 +200,11 @@
                     data: "BOOKINGS_EXPO_DOCS.BULTOS"
                 },
                 {
+                    title: "COMENTARIOS",
+                    data: "BOOKINGS_EXPO_DOCS.COMENTARIO",                   
+                    className: "dt-head-center"
+                },             
+                {
                     title: "ADJUNTO",
                     data: "BOOKINGS_EXPO_DOCS.ADJUNTO",
                     render: function (file_id) {
@@ -171,9 +224,11 @@
                             { value: '1', id: '1',text:'Completo' },
                             { value: '2', id: '2',text:'Incompleto' }
                          ];
-
-                        
-                        let selectHtml = `<select id="sl_state" onclick="event.stopPropagation()" onchange="mostrarModal('${row.BOOKINGS_EXPO_DOCS.BOOKING}','${row.BOOKINGS_EXPO_DOCS.CODIGO}',this)">`;
+           
+                        let selectHtml = `<select id="sl_state" 
+                           onclick="event.stopPropagation()" 
+                           onchange="mostrarModal('${row.BOOKINGS_EXPO_DOCS.BOOKING}','${row.BOOKINGS_EXPO_DOCS.CODIGO}',this,'${isAgent}')" 
+                           ${isAgent=="True" ? "" : "disabled"}>`;
 
                         for (let option of selectOptions) {
                             selectHtml += `<option id="${option.id}" value="${option.value}" ${data === option.value ? 'selected' : ''}>${option.text}</option>`;
@@ -194,6 +249,20 @@
 
             lengthChange: false,
             language: lang,
+            columnDefs: [
+                {
+                    targets: [6],
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css({
+                            'white-space': 'normal',
+                            'word-wrap': 'break-word',
+                            'max-width': '300px',
+                            'text-align': 'left',
+                            'padding-left': '10px'
+                        });
+                    }
+                }
+            ],
             buttons: [
                 {
                     extend: 'create', editor: editor,
@@ -221,6 +290,8 @@
 
             ]
         });      
+
+
 
         
         tableFiles.off('click', 'td.dt-control').on('click', 'td.dt-control', function () {

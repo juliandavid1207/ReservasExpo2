@@ -57,7 +57,10 @@ namespace AllNet.Modules.ReservasExportaciones
             get
             {
                 if (Settings.Contains("RolAgente"))
-                    return UserController.Instance.GetCurrentUserInfo().IsInRole(Settings["RolAgente"].ToString());
+                {
+                    return UserController.Instance.GetCurrentUserInfo().IsInRole(Settings["RolAgente"].ToString());                    
+                }
+                    
                 return UserController.Instance.GetCurrentUserInfo().IsInRole("AgenteAGP");
             }
         }

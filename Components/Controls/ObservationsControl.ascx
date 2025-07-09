@@ -49,6 +49,11 @@
         width: 100% !important;
         display: block;
     }
+    td.wrap-text {
+        white-space: normal;
+        word-wrap: break-word;
+        max-width: 200px;
+    }
 </style>
 <div class="modal fade" id="CommentsModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg modal-vertical-centered modal-dialog-custom modal-lg-custom" role="document">
@@ -74,33 +79,34 @@
               </table>
             </div>
           </div>
-
-          <div class="comments mt-3">
-            <div class="cont-boxcomment">
-              <input type="hidden" id="bl_orig">
-              <textarea id="comentario" name="comentario" required class="form-control" placeholder="Escribe tu comentario..."></textarea>
+            <div class="comments mt-3">
+                <div class="cont-boxcomment">
+                    <input type="hidden" id="bl_orig" />
+                    <textarea id="comentario" name="comentario" required maxlength="500" class="form-control" placeholder="Escribe tu comentario..." autofocus></textarea>
+                </div>
+                <div class="cont-btn mt-2">
+                    <button type="button" id="btn-admin" class="btn btn-primary" onclick="AgregarComentario()">Agregar comentario</button>
+                </div>
             </div>
-            <div class="cont-btn mt-2">
-              <button type="button" id="btn-admin" class="btn btn-primary" onclick="AgregarComentario()">Agregar comentario</button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script>
-    function VerObservaciones(bl) {    
-        $('#CommentsModal').modal('show');
-        $('#CommentsModal').addClass('center-opening show');
-        $('body').addClass('modal-open');
-
-
+    $(document).ready(function () {
         $('#CommentsModal').on('hidden.bs.modal', function () {
             $(this).removeClass('center-opening show');
             $('body').removeClass('modal-open');
+            $('#comentario').val('');
         });
-        document.getElementById("bl_orig").value = bl
+    });
+
+    function VerObservaciones(bl) {
+        $('#CommentsModal').modal('show').addClass('center-opening show');
+        $('body').addClass('modal-open');
+        $('#bl_orig').val(bl);
+
         tableComments = $('#tbl_comments').DataTable({
             dom: 'Bfrtip',
             scrollY: '300px',
@@ -108,19 +114,20 @@
             pageLength: 4,
             destroy: true,
             processing: true,
-            order: [4, 'desc'], 
+            order: [[4, 'desc']],
             ajax: {
                 url: urlApi + 'Comments/Get',
+                type: 'POST',
                 beforeSend: sf.setModuleHeaders,
                 data: function (data) {
-                    data.cn = cn_hash;
-                    data.pkey = pkey;
-                    data.Booking = bl;
-                    data.nituser = nitUser;
-                    data.isagent = isAgent;
-                    return data;
-                },
-                type: 'POST'
+                    return {
+                        cn: cn_hash,
+                        pkey: pkey,
+                        Booking: bl,
+                        nituser: nitUser,
+                        isagent: isAgent
+                    };
+                }
             },
             columns: [
                 { title: "ID_COMMENT", data: "ID_COMMENT", visible: false, key: true },
@@ -131,29 +138,27 @@
             ],
             columnDefs: [
                 {
-                    targets: 4, // Índice de la columna de fecha
+                    targets: 4,
                     render: function (data, type, row) {
                         if (!data) return '';
-
-                        // Separar por espacio y luego por / y :
-                        const [datePart, timePart] = data.split(' ');
+                        const [datePart, timePart = '00:00:00'] = data.split(' ');
                         const [day, month, year] = datePart.split('/');
-                        const [hour = 0, minute = 0, second = 0] = timePart ? timePart.split(':') : [0, 0, 0];
+                        const [hour, minute, second] = timePart.split(':');
+                        const dateObj = new Date(year, month - 1, day, hour, minute, second);
 
-                        const dateObj = new Date(
-                            parseInt(year),
-                            parseInt(month) - 1,
-                            parseInt(day),
-                            parseInt(hour),
-                            parseInt(minute),
-                            parseInt(second)
-                        );
-
-                        if (type === 'display' || type === 'filter') {
-                            return data; // mostrar formato original
-                        }
-
-                        return dateObj.getTime(); // para ordenar correctamente incluso por segundos
+                        return (type === 'display' || type === 'filter') ? data : dateObj.getTime();
+                    }
+                },
+                {
+                    targets: 2,
+                    createdCell: function (td) {
+                        $(td).css({
+                            'white-space': 'normal',
+                            'word-wrap': 'break-word',
+                            'max-width': '300px',
+                            'text-align': 'justify',
+                            'padding-left': '10px'
+                        });
                     }
                 }
             ],
@@ -166,36 +171,35 @@
         });
     }
 
-
-
     function AgregarComentario() {
-        var bl = document.getElementById("bl_orig").value;
-        var user1 = "UserTest";
-        var comment = document.getElementById("comentario").value;
-        if (comment.trim() != "") {
-            $.ajax({
-                url: urlApi + 'Comments/InsertComment',
-                beforeSend: sf.setModuleHeaders,
-                data: {
-                    cn: cn_hash,
-                    pkey: pkey,
-                    Booking: bl,
-                    nituser: nitUser,
-                    user1: user1,
-                    isagent: isAgent,
-                    Comment: comment
-                },
-                type: 'POST',
-                success: function (response) {
-                    console.log(response);
-                    tableComments.ajax.reload();     
-                },
-                error: function (error) {
-                    console.error(error);
-                }
-            });
-            tableComments.ajax.reload();
-            document.getElementById("comentario").value = "";
-        }
-    }  
+        const bl = $('#bl_orig').val();
+        const username = "UserTest"; // Reemplaza por tu lógica de usuario actual
+        const comment = $('#comentario').val().trim();
+
+        if (!comment) return;
+
+        $.ajax({
+            url: urlApi + 'Comments/InsertComment',
+            type: 'POST',
+            beforeSend: sf.setModuleHeaders,
+            data: {
+                cn: cn_hash,
+                pkey: pkey,
+                Booking: bl,
+                nituser: nitUser,
+                user1: username,
+                isagent: isAgent,
+                Comment: comment
+            },
+            success: function (response) {
+                console.log(response);
+                $('#comentario').val('');
+                tableComments.ajax.reload(null, false); // No resetea paginación
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+
 </script>

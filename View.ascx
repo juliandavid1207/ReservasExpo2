@@ -201,12 +201,13 @@
                 }
             ],
             i18n: i18
-        });
+        });    
 
         table = $('#tbl_bookings').DataTable({
             dom: 'Bfrtip',
             serverSide: true,
             processing: true,
+            stateSave : true,
             order: [4, 'desc'], 
             ajax: {
                 url: urlApi + 'Bookings/Get',
@@ -218,7 +219,7 @@
                     data.isagent = isAgent;
                     return data;
                 },
-                type: 'POST'
+                type: 'POST'               
             },
             columns: [
                 {
@@ -257,16 +258,16 @@
                     render: function (data, type, row) {
                         var imageUrl = '../images/img_observaciones.gif';
                         var imageStyle = 'width: 30px; height: 30px;';
-                        return `<button type="button" onclick="VerObservaciones('${row.BL_ORIG}')" style="border: none; background: none; padding: 0; margin: 0;"><img src="${imageUrl}" alt="Observaciones" style="${imageStyle}"></button>`;
+                        return `<button type="button" onclick="VerObservaciones('${row.BL_ORIG}')" class="btn btn-primary">Comentarios</button>`;
                     },
-                    className: "dt-head-center"
+                    className: "dt-head-center"              
                 },
                 {
                     title: "Documentos",
                     data: "ADJUNTOS",
                     render: function (data, type, row) {
                         if (type === 'display')
-                            return `<button type="button" id="btn-admin" class="btn btn-primary" onclick="leerDocumentos('${row.BL_ORIG}');">Subir documentos (${data})</button>`;
+                            return `<button type="button" id="btn-admin" class="btn btn-primary" onclick="leerDocumentos('${row.BL_ORIG}','${row.DATE_CUTOFF}');">Documentos (${data})</button>`;
                     },
                     defaultContent: '',
                     className: "dt-head-center"
@@ -346,6 +347,8 @@
             ]
 
         });
+
+   
         $('#puertoFilter').on('change', function () {
             var selectedValue = $(this).val();           
             console.log('Dropdown change event triggered. Selected Puerto:', selectedValue);
@@ -366,13 +369,16 @@
         });
 
         $('#myModal').on('hidden.bs.modal', function () {
-            table.draw();
+            table.ajax.reload(null, false);
+/*            table.draw();*/
         });
 
-
-
-
-
+        function reloadTablePreservePage() {
+            const currentPage = table.page(); 
+            table.ajax.reload(function () {
+                table.page(currentPage).draw(false); 
+            }, false);
+        }
 
         editor.on('preUpload', function (event, field, file) {//preSubmit //preUpload
             //console.log(event);

@@ -64,7 +64,7 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
             var bl_orig = request.Form.GetValues("Booking").FirstOrDefault();
             var comment = request.Form.GetValues("Comment").FirstOrDefault();
             var user1 = request.Form.GetValues("User1").FirstOrDefault();
-            var emailController = new EmailController("julian_0207@hotmail.com","jotalora@famcargo.com", "jotalora@famcargo.com","PruebaMailComments",comment);
+            var emailController = new EmailController("kperez@agpagencia.com","jotalora@famcargo.com", "jotalora@famcargo.com","PruebaMailComments",comment);
 
             int mailPriority = (int)MailPriority.Normal;
             int mailFormat = (int)MailFormat.Text;

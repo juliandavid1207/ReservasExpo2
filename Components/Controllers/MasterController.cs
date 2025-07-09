@@ -77,8 +77,7 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
             try
             {
                 var request = HttpContext.Current.Request;               
-                NitUser = request.Form.GetValues("nituser").FirstOrDefault();
-                //NitUser = "860000006";
+                NitUser = request.Form.GetValues("nituser").FirstOrDefault();      
                 IsAgent = Convert.ToBoolean(request.Form.GetValues("isagent").FirstOrDefault());
                 if (!String.IsNullOrEmpty(request.Form["pkey"]))
                 {

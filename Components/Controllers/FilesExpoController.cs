@@ -131,11 +131,16 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
         public IHttpActionResult Put()
         {
             var request = HttpContext.Current.Request;
-            var state_id = request.Form.GetValues("state_id").FirstOrDefault();
-            var bl = request.Form.GetValues("Booking").FirstOrDefault();
-            var codigo = request.Form.GetValues("Codigo").FirstOrDefault();
-            var result = _bookingsServices.UpdateState(bl,codigo, state_id);
-            return Ok(result);
+            var agent = request.Form.GetValues("isagent").FirstOrDefault();
+            if (agent == "True")
+            {
+                var state_id = request.Form.GetValues("state_id").FirstOrDefault();
+                var bl = request.Form.GetValues("Booking").FirstOrDefault();
+                var codigo = request.Form.GetValues("Codigo").FirstOrDefault();
+                var result = _bookingsServices.UpdateState(bl, codigo, state_id);
+                return Ok(result);
+            }
+            return Ok(agent);
         }
 
 

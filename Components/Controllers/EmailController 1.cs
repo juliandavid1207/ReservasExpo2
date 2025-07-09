@@ -15,7 +15,7 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
         private string _msg; //Cuerpo del mensaje
 
         // Constructor que permite inicializar el controlador de email con parámetros opcionales
-        public EmailController(string to, string from = null, string cc = null, string subject = null, string msg = null)
+        public EmailController(string to, string from, string cc = null, string subject=null, string msg = null)
         {
             _to = to; // Dirección de correo del destinatario
 
@@ -36,8 +36,7 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
         public async Task SendEmailAsync(int mailPriority, int mailFormat, string smtpServer, string emailAuth, string passAuth, Encoding encoding)
         {
             try
-            {
-                // Ejecuta el método SendMail en un hilo separado usando Task.Run
+            {               
                 await Task.Run(() =>
                     Mail.SendMail(
                         FromAddress,
