@@ -13,6 +13,8 @@
 using AllNet.Modules.ReservasExportaciones.Components;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Users;
+using System;
+using System.Linq;
 
 namespace AllNet.Modules.ReservasExportaciones
 {
@@ -56,14 +58,22 @@ namespace AllNet.Modules.ReservasExportaciones
         {
             get
             {
-                if (Settings.Contains("RolAgente"))
-                {
-                    return UserController.Instance.GetCurrentUserInfo().IsInRole(Settings["RolAgente"].ToString());                    
-                }
-                    
-                return UserController.Instance.GetCurrentUserInfo().IsInRole("AgenteAGP");
+                var userInfo = UserController.Instance.GetCurrentUserInfo();
+
+                // Validación de existencia del setting y del usuario
+                if (userInfo == null || !Settings.Contains("RolAgente") || Settings["RolAgente"] == null)
+                    return false;
+
+                string rolAgente = Settings["RolAgente"].ToString();
+
+                if (string.IsNullOrWhiteSpace(rolAgente))
+                    return false;
+
+                // Validamos si el rol está entre los roles del usuario
+                return userInfo.Roles.Any(r => r.Equals(rolAgente, StringComparison.OrdinalIgnoreCase));
             }
         }
+
         public bool IsUserHost
         {
             get

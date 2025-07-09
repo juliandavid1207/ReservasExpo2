@@ -50,7 +50,7 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
             using (var db = new Database(DbType, ConnectionString))
             {
   
-                if (NitUser == "")
+                if (NitUser == "" || IsAgent == true)
                 {
                     var response_gen = new Editor(db, "V_Bookings", new[] { "BL_ORIG", "BLMASTER" })
                         .Model<BookingsModel>()
