@@ -1,6 +1,6 @@
 <dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="ReservasExportaciones" type="Module" version="00.00.05">
+    <package name="ReservasExportaciones" type="Module" version="00.00.06">
       <friendlyName>ReservasExportaciones</friendlyName>
       <description>allnet.com.co ReservasExportaciones module</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>
