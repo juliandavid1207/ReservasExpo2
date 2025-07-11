@@ -118,39 +118,30 @@
     });
 
     function mensajeCutOff(cutoff) {
-        
         if (typeof cutoff === 'string' && cutoff.includes('/')) {
             const [datePart, timePart] = cutoff.split(' ');
             const [day, month, year] = datePart.split('/');
             cutoff = `${year}-${month}-${day}T${timePart || '00:00:00'}`;
         }
 
-        if (/T\d:/.test(cutoff)) {
+        if (/T\d:/.test(cutoff) && !/T\d{2}:/.test(cutoff)) {
             cutoff = cutoff.replace(/T(\d):/, "T0$1:");
         }
 
         const cutoffDate = new Date(cutoff);
-     
         if (isNaN(cutoffDate)) {
             console.error("Fecha cutoff inválida:", cutoff);
             return;
         }
 
-        const today = new Date();
+        const now = new Date();
 
-        const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-        const cutoffOnly = new Date(cutoffDate.getFullYear(), cutoffDate.getMonth(), cutoffDate.getDate());
-
-        const diffInMs = cutoffOnly - todayOnly;
-        const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-
-        const uploadDeadline = new Date(cutoffOnly);
-        uploadDeadline.setDate(uploadDeadline.getDate() - 1);
-
-        if (diffInDays <= 1) {
+        // Mostrar el modal solo si ya se alcanzó o pasó el cutoff
+        if (now >= cutoffDate) {
             mostrarModal2();
         }
     }
+
 
     function leerDocumentos(bl, cutoff) {
         mensajeCutOff(cutoff);
