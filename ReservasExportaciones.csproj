@@ -113,6 +113,7 @@
       <DependentUpon>ObservationsControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Components\FeatureController.cs" />
+    <Compile Include="Components\Models\ARCHIVOS_SELECTIVIDAD.cs" />
     <Compile Include="Components\Models\BookingsModel.cs" />
     <Compile Include="Components\Models\CommentsModel.cs" />
     <Compile Include="Components\Models\DataClient.cs" />

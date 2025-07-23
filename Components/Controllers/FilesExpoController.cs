@@ -7,9 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net;
 using System.Net.Http.Formatting;
 using System.Web;
 using System.Web.Http;
+using System.Threading.Tasks;
 
 namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
 {
@@ -20,6 +23,7 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
         {
             _bookingsServices = new BookingServices();
         }
+
         public override IHttpActionResult Rest(HttpRequest request)
         {
             using (var db = new Database(DbType, ConnectionString))
@@ -27,8 +31,9 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
                 string bl_orig = String.Empty;
                 string path = String.Empty;
                 var r_query = request.QueryString;
-                var BULTOS = request.Form.GetValues(3).FirstOrDefault();
-                var PESO = request.Form.GetValues(4).FirstOrDefault();
+                var PESO = request.Form.GetValues(3).FirstOrDefault().Replace(".",",");
+                var BULTOS = request.Form.GetValues(4).FirstOrDefault().Replace(".", ","); ;
+
                 if (!String.IsNullOrEmpty(request.Form["BOOKING"]) || !String.IsNullOrEmpty(request.QueryString["BOOKING"]))
                 {
                     bl_orig = !String.IsNullOrEmpty(request.Form["BOOKING"]) ? request.Form["BOOKING"].ToString() : String.Empty;
@@ -56,13 +61,13 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
                     .Field(new Field("CATEGORIA")
                         .Validator(Validation.NotEmpty())
                     )
-                    .Field(new Field("PESO")
-                        .Validator(Validation.NotEmpty())
-                        .DbType(System.Data.DbType.Decimal)
+                    .Field(new Field("PESO")                      
+                        .DbType(System.Data.DbType.Decimal)    
+                        .SetValue(PESO)
                     )
-                    .Field(new Field("BULTOS")
-                        .Validator(Validation.NotEmpty())
-                        .DbType(System.Data.DbType.Decimal)
+                    .Field(new Field("BULTOS")                      
+                        .DbType(System.Data.DbType.Decimal)       
+                        .SetValue(BULTOS)
                     )
                     .Field(new Field("COMENTARIO")
                         .Validator(Validation.NotEmpty())                      
@@ -96,6 +101,51 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
                         .Validator(Validation.NotEmpty())
                         .DbType(System.Data.DbType.Int32)
                         .SetValue(0)
+                    )
+                    .Field(new Field("BLOQUEO_PB")
+                        .Validator(Validation.NotEmpty())
+                        .DbType(System.Data.DbType.Int32)
+                        .SetValue(0)
+                    )
+                    .MJoin(new MJoin("ARCHIVOS_SELECTIVIDAD")
+                        .Link("BOOKINGS_EXPO_DOCS.ID", "USERS_FILES_SL.BOOKINGS_ID")
+                        .Link("ARCHIVOS_SELECTIVIDAD.Id", "USERS_FILES_SL.SELECTIVIDAD_ID")
+                        .Model<ARCHIVOS_SELECTIVIDAD>()                        
+                        .Field(new Field("web_path"))
+                        .Field(new Field("system_path"))
+                        .Field(new Field("filename"))
+                        .Field(new Field("Id")
+                        .Upload(new Upload(path + @"__NAME_____ID____EXTN__")
+                            .Db("ARCHIVOS_SELECTIVIDAD", "Id", new Dictionary<string, object>
+                            {
+                                {"web_path", DataTables.Upload.DbType.WebPath},
+                                {"system_path", DataTables.Upload.DbType.SystemPath},
+                                {"filename", DataTables.Upload.DbType.FileName}
+                            })
+                            .Validator(Validation.FileSize(5000000, "Tamaño máximo 5MB"))
+                            .Validator(Validation.FileExtensions(new[] { "jpg", "png", "pdf" }, "Formato inválido"))
+                        )
+    )
+                    )
+                    .MJoin(new MJoin("PLANILLA_TRASLADO")
+                        .Link("BOOKINGS_EXPO_DOCS.ID", "USERS_FILES_PT.BOOKINGS_ID")
+                        .Link("PLANILLA_TRASLADO.Id", "USERS_FILES_PT.PLANILLA_ID")
+                        .Model<ARCHIVOS_SELECTIVIDAD>()
+                        .Field(new Field("web_path"))
+                        .Field(new Field("system_path"))
+                        .Field(new Field("filename"))
+                        .Field(new Field("Id")
+                        .Upload(new Upload(path + @"__NAME_____ID____EXTN__")
+                            .Db("PLANILLA_TRASLADO", "Id", new Dictionary<string, object>
+                            {
+                                {"web_path", DataTables.Upload.DbType.WebPath},
+                                {"system_path", DataTables.Upload.DbType.SystemPath},
+                                {"filename", DataTables.Upload.DbType.FileName}
+                            })
+                            .Validator(Validation.FileSize(5000000, "Tamaño máximo 5MB"))
+                            .Validator(Validation.FileExtensions(new[] { "jpg", "png", "pdf" }, "Formato inválido"))
+                        )
+    )
                     )
                     .MJoin(new MJoin("DETCARGAB")
                        .Model<DetCargaBModel>()                       
@@ -143,9 +193,42 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
             return Ok(agent);
         }
 
+        [HttpGet]
+        [ActionName("GetPathArchivo")]
+        public HttpResponseMessage Get(string id)
+        {
+            try
+            {
+                dynamic rutaFisica = _bookingsServices.GetFilePath(id).Result;
+                
 
+                if (rutaFisica == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Archivo no encontrado");
+                }
 
+                string path=rutaFisica.path;
+                string name = rutaFisica.name;
 
+                var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                var result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StreamContent(stream)
+                };
+
+                result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = name ?? Path.GetFileName(path)
+                };
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Error: " + ex.Message);
+            }
+        }
 
 
 

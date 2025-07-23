@@ -31,6 +31,7 @@
     var tableComments = {};
     var row2 = null;
     var bl_prueba = '';
+    var row_padre = '';
 
     const i18 = {
         create: {
@@ -172,12 +173,12 @@
                     placeholder: 'Selecciona una opción'
                 },
                 {
-                    "label": "Código:",
+                    "label": "No. Documento:",
                     "name": "CODIGO"
                 },
                 {
                     "label": "Peso:",
-                    "name": "PESO"
+                    "name": "PESO"                   
                 },
                 {
                     "label": "Bultos:",
@@ -188,6 +189,34 @@
                     "name": "COMENTARIO",
                     "type": "textarea"
                 },
+                {
+                    label: "Selectividad:",
+                    name: "ARCHIVOS_SELECTIVIDAD[].Id",
+                    type: "uploadMany",
+                    display: function (fileId, counter) {
+                        const file = editor.file('ARCHIVOS_SELECTIVIDAD', fileId);
+                        return file
+                            ? `<a href="${file.web_path}">${file.filename}</a>`
+                            : '';
+                    },
+                    clearText: "Eliminar archivo",
+                    noImageText: "No hay archivo",
+                    noFileText: 'No hay archivos'
+                },      
+                {
+                    label: "Planilla traslado:",
+                    name: "PLANILLA_TRASLADO[].Id",
+                    type: "uploadMany",
+                    display: function (fileId, counter) {
+                        const file = editor.file('PLANILLA_TRASLADO', fileId);
+                        return file
+                            ? `<a href="${file.web_path}">${file.filename}</a>`
+                            : '';
+                    },
+                    clearText: "Eliminar archivo",
+                    noImageText: "No hay archivo",
+                    noFileText: 'No hay archivos'
+                },        
                 {
                     "label": "Adjuntar:",
                     "name": "ADJUNTO",
@@ -252,7 +281,7 @@
                     data: "CGO_DSC",                 
                     className: "dt-head-center"
                 },
-                {
+                {                
                     title: "Observaciones",
                     data: "ANEXO",
                     render: function (data, type, row) {
@@ -266,8 +295,33 @@
                     title: "Documentos",
                     data: "ADJUNTOS",
                     render: function (data, type, row) {
-                        if (type === 'display')
-                            return `<button type="button" id="btn-admin" class="btn btn-primary" onclick="leerDocumentos('${row.BL_ORIG}','${row.DATE_CUTOFF}');">Documentos (${data})</button>`;
+                        if (type === 'display') {
+
+                            let fechaCompleta = row.LGE; 
+
+                            let [fecha, hora] = fechaCompleta.split(' ');
+                            let [dia, mes, anio] = fecha.split('/');
+                            let [horas, minutos, segundos] = hora.split(':');
+                          
+                            let lgeDate = new Date(anio, mes - 1, dia, horas, minutos, segundos);                   
+                            let today = new Date();
+
+                            lgeDate.setHours(0, 0, 0, 0);
+                            today.setHours(0, 0, 0, 0);
+
+                            let isPast = lgeDate < today;
+
+                            if (isPast && row.PRT_RCL!="TRB") {
+                                return `<span class="text-danger">Plazo vencido ${row.LGE}</span>`;
+                            } else {
+                                return `
+                    <button type="button" id="btn-admin" class="btn btn-primary"
+                        onclick="leerDocumentos('${row.BL_ORIG}','${row.DATE_CUTOFF}','${row.PRT_RCL}')">
+                        Documentos (${data} registros)
+                    </button>`;
+                            }
+                        }
+                        return data;
                     },
                     defaultContent: '',
                     className: "dt-head-center"
@@ -348,6 +402,7 @@
 
         });
 
+       
    
         $('#puertoFilter').on('change', function () {
             var selectedValue = $(this).val();           
@@ -397,8 +452,25 @@
             }
         });
 
+        editor.on('initEdit', function (e, node, data) {
+            if (data.BLOQUEO_PB == 1) {
+                editor.disable('PESO');
+                editor.disable('BULTOS');
+            } else {
+                editor.enable('PESO');
+                editor.enable('BULTOS');
+            }
+        });
+
+        editor.on('initCreate', function (e, node, data) {           
+            editor.enable('PESO');
+            editor.enable('BULTOS');
+        });
+
 
     });
+
+ 
 </script>
 <asp:PlaceHolder ID="phMain" runat="server">   
     <div class="container">

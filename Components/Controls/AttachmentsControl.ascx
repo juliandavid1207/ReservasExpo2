@@ -143,8 +143,11 @@
     }
 
 
-    function leerDocumentos(bl, cutoff) {
-        mensajeCutOff(cutoff);
+    function leerDocumentos(bl, cutoff, prt) {
+        if (prt != "TRB") {
+            mensajeCutOff(cutoff);
+        }
+          
         tableFiles = $('#tbl_files').DataTable({
             dom: 'Bfrtip',
             serverSide: true,
@@ -174,37 +177,37 @@
                     width: '10%'
                 },
                 {
-                    title: "RESERVA",
+                    title: "Reserva",
                     data: "BOOKINGS_EXPO_DOCS.BOOKING",
                     key: true
                 },
                 {
-                    title: "CODIGO",
+                    title: "No.Documento",
                     data: "BOOKINGS_EXPO_DOCS.CODIGO"
                 },
                 {
-                    title: "CATEGORIA",
+                    title: "Categoria",
                     data: "BOOKINGS_EXPO_DOCS.CATEGORIA"
                 },
                 {
-                    title: "PESO",
+                    title: "Peso",
                     data: "BOOKINGS_EXPO_DOCS.PESO"
                 },
                 {
-                    title: "BULTOS",
+                    title: "Bultos",
                     data: "BOOKINGS_EXPO_DOCS.BULTOS"
                 },
                 {
-                    title: "COMENTARIOS",
+                    title: "Comentarios",
                     data: "BOOKINGS_EXPO_DOCS.COMENTARIO",                   
                     className: "dt-head-center"
                 },             
                 {
-                    title: "ADJUNTO",
+                    title: "Adjunto",
                     data: "BOOKINGS_EXPO_DOCS.ADJUNTO",
                     render: function (file_id) {
                         return file_id ?
-                            `<a href="${editor.file('ARCHIVOS_BOOKINGS', file_id).web_path}" target="_blank">Ver</a>` :
+                            `<a href="${urlApi}/FilesExpo/GetPathArchivo?id=${file_id}" target="_blank">Ver</a>` :
                             null;
                     },
                     defaultContent: "",
@@ -223,7 +226,7 @@
                         let selectHtml = `<select id="sl_state" 
                            onclick="event.stopPropagation()" 
                            onchange="mostrarModal('${row.BOOKINGS_EXPO_DOCS.BOOKING}','${row.BOOKINGS_EXPO_DOCS.CODIGO}',this,'${isAgent}')" 
-                           ${isAgent=="True" ? "" : "disabled"}>`;
+                           ${isAgent == "True" ? "" : "disabled"} style="color: black;">`;
 
                         for (let option of selectOptions) {
                             selectHtml += `<option id="${option.id}" value="${option.value}" ${data === option.value ? 'selected' : ''}>${option.text}</option>`;
@@ -296,6 +299,7 @@
             btn_child = $(this);
 
             let row = tableFiles.row(tr);
+            row_padre = row;
 
             if (row.child.isShown()) {
 
@@ -357,7 +361,7 @@
                             data.nituser = nitUser;
                             data.isagent = isAgent;
                             data.Booking = booking;
-                            /*  data.Codigo = tableFiles.row({ selected: true }).data() !== undefined ? tableFiles.row({ selected: true }).data().CODIGO : '';*/
+                            data.Codigo = tableFiles.row({ selected: true }).data() !== undefined ? tableFiles.row({ selected: true }).data().CODIGO : '';
                             data.ID = row.data().ID;
                             return data;
                         }
@@ -455,10 +459,20 @@
                     else {
                         return 'hola'
                     }
-
-
                     console.log('Datos del nuevo registro:', data.data);
                 }
+            });
+
+            editorCntr.on('postEdit postCreate postRemove', function () {
+           /*      tableFiles.ajax.reload(null, false); */
+              /*  row_padre.data(row_padre.data()).draw(false);   */
+
+                //setTimeout(function () {
+                //    row_padre.find('td.  dt-control').trigger('click');
+                //}, 100);
+           
+
+
             });
         }
 

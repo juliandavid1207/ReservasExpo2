@@ -1,4 +1,6 @@
-﻿using AllNet.Modules.ReservasExportaciones.Components.Models;
+﻿using AllNet.Modules.ReservasExportaciones.Abstractions;
+using AllNet.Modules.ReservasExportaciones.Components.Models;
+using AllNet.Modules.ReservasExportaciones.Services;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.Web.Api;
 using System;
@@ -13,7 +15,8 @@ namespace AllNet.Modules.ReservasExportaciones.Components.Controllers
 {
     [DnnAuthorize]
     public class MasterController : DnnApiController
-    {
+    { 
+
         private string _connectionString;
         private string _dbType;
         private string _secretKey;
